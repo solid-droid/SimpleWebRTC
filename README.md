@@ -3,7 +3,7 @@
  [Live Demo](https://solid-droid.github.io/SimpleWebRTC/)
 
 # Why
-1. The SimpleWebRTC wrapper library will let you build a functional webRTC in  less than 10 lines of code.
+1. Build a functional webRTC in  less than 10 lines of code.
 2. Its a wrapper for peerJS library.
 3. easily establish multi-pear connections.
 4. inbuilt Auto sync all nodes to create a mesh network.
