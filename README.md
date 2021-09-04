@@ -1,6 +1,6 @@
 # SimpleWebRTC
- Easy to use wrapper for peerJS WebRTC library
- [Demo](https://solid-droid.github.io/SimpleWebRTC/)
+ Easy to use wrapper for peerJS WebRTC library  
+ [Live Demo](https://solid-droid.github.io/SimpleWebRTC/)
 
 # Why
 1. The SimpleWebRTC wrapper library will let you build a functional webRTC in  less than 10 lines of code.
