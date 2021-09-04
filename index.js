@@ -4,7 +4,7 @@ let MessageSend = document.getElementById("MessageSend");
 let MessageGet = document.getElementById("MessageGet");
 
 
-let webRTC = new simpleWebRTC(null ,{
+const webRTC = new simpleWebRTC(null ,{
     connected : id => hostID.value = id,
     subscriber : data => getData(data),
     remoteMedia : data => getMedia(data),
