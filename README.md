@@ -2,7 +2,7 @@
  Easy to use wrapper for peerJS WebRTC library
 
 # Why
-1. The SimpleWebRTC wrapper library will let you build a functional webRTC in  less than 5 lines of code.
+1. The SimpleWebRTC wrapper library will let you build a functional webRTC in  less than 10 lines of code.
 2. Its a wrapper for peerJS library.
 3. easily establish multi-pear connections.
  
