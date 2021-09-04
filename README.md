@@ -51,3 +51,17 @@ webRTC.sendData(message, [id1, id2, ..]);
 webRTC.beginCall(id);
 
 ```
+
+# Attributes
+
+```javascript
+//my id
+webRTC.id : string
+
+//connected remote id list
+webRTC.connectedID : string array
+
+//remote stream list
+webRTC.remoteStream : object array
+
+```
