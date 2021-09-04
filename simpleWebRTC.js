@@ -10,18 +10,20 @@ class simpleWebRTC {
     logger;
     connected;
     remoteMedia;
+    onSync;
     video = false;
     audio = false;
 
-    constructor (id = null, {connected, subscriber,logger , remoteMedia , video , audio }
-        ={connected, subscriber:null,logger:null, remoteMedia:null , video :false, audio:false})
+    constructor (id = null, {onInit , onMessage ,logger , remoteMedia , video , audio , onSync}
+        ={onInit, onMessage:null,logger:null, remoteMedia:null , video :false, audio:false ,onSync :null})
     {
-        this.subscriber = subscriber;
+        this.subscriber = onMessage;
         this.logger = logger;
-        this.connected = connected;
+        this.connected = onInit;
         this.remoteMedia = remoteMedia;
         this.video = video;
         this.audio = audio;
+        this.onSync = onSync;
         this.#init(id);
     }
 
@@ -138,6 +140,7 @@ class simpleWebRTC {
              if(this.id !== _id && !this.connectedID.find(x => x == _id)){
                 this.#sendLog('connecting to new node');
                 this.joinID(_id);
+                this.SyncingComplete(id);
             } else {
                 this.#sendLog('Node Already exists');
             }
@@ -145,6 +148,12 @@ class simpleWebRTC {
             if(this.subscriber){
                 this.subscriber({id , data});
             }
+        }
+    }
+
+    SyncingComplete(id){
+        if(this.onSync) {
+            this.onSync(id);
         }
     }
 

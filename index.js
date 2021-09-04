@@ -5,9 +5,10 @@ let MessageGet = document.getElementById("MessageGet");
 
 
 const webRTC = new simpleWebRTC(null ,{
-    connected : id => hostID.value = id,
-    subscriber : data => getData(data),
+    onInit : id => hostID.value = id,
+    onMessage : data => getData(data),
     remoteMedia : data => getMedia(data),
+    onSync : id => console.log('New Node :', id),
     logger :  data => console.log(data),
     video : true,
     audio : true
