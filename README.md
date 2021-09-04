@@ -21,13 +21,14 @@ Javascript
  //for custom id pass id:string instead of null
  
  const webRTC = new simpleWebRTC(null ,{
-    connected : myID => { },                 // on connection to peerJS 
-    subscriber : ({data, id}) => { },        // on recieving data from any connection 
-    remoteMedia : list => {   },             // on recieving a remote media ( Audio / Video )
-    //list = [ {id , stream},... ]
-    logger :  data => console.log(data),     // logs everything
-    video : true,                            // true to allow video stream
-    audio : true                             // true to allow audio stream
+    onInit      : myID => { },                    // on connection to peerJS 
+    onMessage   : ({data, id}) => { },            // on recieving data from any node 
+    remoteMedia : list => {   },                  // on recieving a remote media ( Audio / Video )
+                                                  // list = [ {id , stream},... ]
+    onSync      : id => { ... }                   // on adding a new node in network
+    logger      :  data => console.log(data),     // logs everything
+    video       : true,                           // true to allow video stream
+    audio        : true                           // true to allow audio stream
 });
 
 ```
