@@ -35,7 +35,8 @@ Javascript
 # Methods
 
 ```javascript
-//To connect to a remote node pass its id.
+//To connect to the network by passing any remote node id.
+//Auto sync will take care of connecting in all nodes.
 webRTC.joinID(id);
 
 //To send message to all connected nodes
