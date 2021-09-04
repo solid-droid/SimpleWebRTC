@@ -25,10 +25,10 @@ Javascript
     onMessage   : ({data, id}) => { },            // on recieving data from any node 
     remoteMedia : list => {   },                  // on recieving a remote media ( Audio / Video )
                                                   // list = [ {id , stream},... ]
-    onSync      : id => { ... }                   // on adding a new node in network
-    logger      :  data => console.log(data),     // logs everything
+    onSync      : id => { ... },                  // on adding a new node in network
+    logger      : data => console.log(data),     // logs everything
     video       : true,                           // true to allow video stream
-    audio        : true                           // true to allow audio stream
+    audio       : true                           // true to allow audio stream
 });
 
 ```
