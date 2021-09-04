@@ -2,9 +2,9 @@ class simpleWebRTC {
     #lastPeerId = null;
     #peer = null;
     #conn = [];
-    #connectedID = [];
+    connectedID = [];
     remoteStream = [];
-    #id = null;
+    id = null;
     getUserMedia;
     subscriber;
     logger;
@@ -37,17 +37,17 @@ class simpleWebRTC {
             } else {
                 this.#lastPeerId = this.#peer.id;
             }
-            this.#id = this.#peer.id;
+            this.id = this.#peer.id;
             if(this.connected){
-                this.connected(this.#id);
+                this.connected(this.id);
             }
-            this.#sendLog(`ID : ${this.#id}`);
+            this.#sendLog(`ID : ${this.id}`);
         });
 
         this.#peer.on('connection', c => {
 
             this.#conn.push(c);
-            this.#connectedID.push(this.#conn[this.#conn.length-1].peer);
+            this.connectedID.push(this.#conn[this.#conn.length-1].peer);
             this.#sendLog("Connected to: " + this.#conn[this.#conn.length-1].peer);
             this.#beginConnection(this.#conn[this.#conn.length-1]);
         });
@@ -61,7 +61,7 @@ class simpleWebRTC {
 
         this.#peer.on('close', () => {
             this.#conn = [];
-            this.#connectedID = [];
+            this.connectedID = [];
             this.#sendLog('Connection destroyed');
         });
         this.#peer.on('error', err => {
@@ -75,10 +75,10 @@ class simpleWebRTC {
     }
 
     getMyID(){
-        return this.#id;
+        return this.id;
     }
     getConnectedID(){
-        return this.#connectedID;
+        return this.connectedID;
     }
 
     joinID(id) {
@@ -89,29 +89,30 @@ class simpleWebRTC {
         this.#conn[this.#conn.length-1].on('open', () => {
             this.#sendLog("Connected to: " + _conn.peer);
         });
-        this.#connectedID.push(this.#conn[this.#conn.length-1].peer);
+        this.connectedID.push(this.#conn[this.#conn.length-1].peer);
         this.#beginConnection(this.#conn[this.#conn.length-1]);
       
     }
 
     #beginConnection(conn){
+        this.syncAllNode(conn.peer);
         conn.on('data', data => {
             this.#sendLog(`${conn.peer} :=> ${data}`);
             this.#getData(data,conn.peer);
         });
         conn.on('close', () => {
             this.#sendLog(`connection closed from ${conn.peer}`);
-            this.#connectedID.splice(this.#connectedID.indexOf(conn.peer), 1);
+            this.connectedID.splice(this.connectedID.indexOf(conn.peer), 1);
         });
     }
 
     sendData(data , id=null){
         let connList = [];
         if(typeof id == 'string') {
-            connList.push(this.#conn[this.#connectedID.findIndex(id)]);
+            connList.push(this.#conn[this.connectedID.findIndex(id)]);
         } else if (Array.isArray(id)) {
             id.forEach(_id => {
-                connList.push(this.#conn[this.#connectedID.findIndex(_id)]);
+                connList.push(this.#conn[this.connectedID.findIndex(_id)]);
             })
         } else {
             connList = this.#conn;
@@ -128,8 +129,22 @@ class simpleWebRTC {
     }
 
     #getData(data, id){
-        if(this.subscriber){
-            this.subscriber({id , data});
+        if(data.split('***')[0]==='#$id#$')
+        {
+            let _id = data.split('***')
+            _id.splice(0, 1);
+            _id = _id.join('***');
+            this.#sendLog('Recieving syncing data');
+             if(this.id !== _id && !this.connectedID.find(x => x == _id)){
+                this.#sendLog('connecting to new node');
+                this.joinID(_id);
+            } else {
+                this.#sendLog('Node Already exists');
+            }
+        } else {
+            if(this.subscriber){
+                this.subscriber({id , data});
+            }
         }
     }
 
@@ -173,5 +188,11 @@ class simpleWebRTC {
         if(this.remoteMedia){
             this.remoteMedia(this.remoteStream)
         }
+    }
+
+   async syncAllNode(id){
+       await new Promise(r => setTimeout(r , 2000));
+       this.#sendLog('sending sync data');
+        this.sendData('#$id#$***'+id);
     }
 }
