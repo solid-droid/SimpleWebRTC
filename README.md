@@ -5,7 +5,7 @@
 # Why
 1. Build a functional webRTC in  less than 10 lines of code.
 2. Its a wrapper for peerJS library.
-3. easily establish multi-pear connections.
+3. easily establish multi-node connections.
 4. inbuilt Auto sync all nodes to create a mesh network.
 
 # Usage
