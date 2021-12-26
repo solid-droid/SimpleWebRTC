@@ -1,6 +1,6 @@
 # SimpleWebRTC
  Easy to use wrapper for peerJS WebRTC library  
- (Currently focussed more on messaging. but video stream also works, not fully tested)
+ (Currently focussed more on messaging. but video stream also works, not fully tested)  
  [Live Demo](https://solid-droid.github.io/SimpleWebRTC/)
 
 # Why
